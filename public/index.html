@@ -6,6 +6,17 @@
     <title>Gaflanov</title>
 </head>
 <body>
-    Hello User!
+    <main>
+        <h1>Hello User!</h1>
+        <button id="logout">Log Out</button>
+    </main>
+
+    <script>
+        const logoutButton = document.getElementById('logout');
+        logoutButton?.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = '/login.html';
+        });
+    </script>
 </body>
 </html>

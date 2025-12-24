@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>phpMyAdmin - Admin</title>
+    <style>
+        :root {
+            --bg: #f3f5f7;
+            --panel: #ffffff;
+            --line: #c7d3df;
+            --header: #2f5c88;
+            --header-dark: #244a6d;
+            --accent: #f2b632;
+            --text: #1f2a38;
+            --muted: #6b7a8a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, #e7edf3 0%, var(--bg) 100%);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: linear-gradient(90deg, var(--header), var(--header-dark));
+            color: #fff;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 0.4px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-meta {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 56px);
+        }
+
+        aside {
+            background: #e4ebf2;
+            border-right: 1px solid var(--line);
+            padding: 16px;
+        }
+
+        aside h2 {
+            font-size: 13px;
+            margin: 0 0 12px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .tree {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .tree li {
+            padding: 6px 8px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            background: #f7fafc;
+        }
+
+        .tree li strong {
+            color: var(--header-dark);
+        }
+
+        main {
+            padding: 20px 28px;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .toolbar span {
+            padding: 4px 8px;
+            background: #f6f8fb;
+            border: 1px solid var(--line);
+            border-radius: 3px;
+        }
+
+        .db-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .db-select label {
+            margin: 0;
+        }
+
+        .db-select select {
+            padding: 6px 10px;
+            border: 1px solid var(--line);
+            border-radius: 3px;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 18px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        .panel h1 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 12px 16px;
+            margin-top: 16px;
+        }
+
+        label {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        input {
+            padding: 8px 10px;
+            border: 1px solid var(--line);
+            border-radius: 3px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        button {
+            grid-column: 2;
+            padding: 8px 14px;
+            background: var(--header);
+            color: #fff;
+            border: 1px solid var(--header-dark);
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #admin-status {
+            grid-column: 2;
+            margin: 0;
+            color: var(--header-dark);
+            font-size: 13px;
+        }
+
+        .table-preview {
+            margin-top: 24px;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px;
+        }
+
+        .table-preview th,
+        .table-preview td {
+            border: 1px solid var(--line);
+            padding: 8px 10px;
+        }
+
+        .table-preview th {
+            background: #edf3f8;
+            color: var(--header-dark);
+            text-align: left;
+        }
+
+        @media (max-width: 860px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            button,
+            #admin-status {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">php<span>MyAdmin</span></div>
+        <div class="header-meta">Server: LocalWebControl</div>
+    </header>
+
+    <div class="layout">
+        <aside>
+            <h2>Databases</h2>
+            <ul class="tree">
+                <li><strong>localwebcontrol</strong></li>
+                <li>users</li>
+                <li>sessions</li>
+                <li>logs</li>
+            </ul>
+        </aside>
+
+        <main>
+            <div class="toolbar">
+                <span>Browse</span>
+                <span>Structure</span>
+                <span>SQL</span>
+                <span>Insert</span>
+                <span>Export</span>
+            </div>
+
+            <section class="panel">
+                <h1>Database Viewer</h1>
+                <p>Select a database and manage user records.</p>
+                <div class="db-select">
+                    <label for="db-select">Database</label>
+                    <select id="db-select" name="db-select"></select>
+                </div>
+                <form id="admin-form" autocomplete="off">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="text" required>
+
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text">
+
+                    <button type="submit">Create User</button>
+                    <p id="admin-status" aria-live="polite"></p>
+                </form>
+
+                <table class="table-preview">
+                    <thead>
+                        <tr id="db-table-head"></tr>
+                    </thead>
+                    <tbody id="db-table-body"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
