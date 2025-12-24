@@ -1,0 +1,15 @@
+{
+  "name": "localwebcontrol",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Huseyn Gaflanov",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
