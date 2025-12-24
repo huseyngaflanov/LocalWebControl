@@ -7,16 +7,50 @@
 </head>
 <body>
     <main>
-        <h1>Hello User!</h1>
-        <button id="logout">Log Out</button>
+        <h1>Welcome</h1>
+        <p id="status"></p>
+        <ul id="user-details"></ul>
     </main>
 
     <script>
+        const statusEl = document.getElementById('status');
+        const detailsEl = document.getElementById('user-details');
         const logoutButton = document.getElementById('logout');
+
+        const rawUser = localStorage.getItem('user');
+        const user = rawUser ? JSON.parse(rawUser) : null;
+
+        let uname = 'Guest';
+        let uemail = '';
+        let uid = '';
+
+        if (!user) {
+            window.location.href = '/login.html';
+        } else {
+            statusEl.textContent = 'You are logged in.';
+            detailsEl.innerHTML = '';
+            ['name', 'email', 'id'].forEach((key) => {
+                if (key === 'name') uname = user[key] || 'Guest';
+                if (key === 'email') uemail = user[key] || '';
+                if (key === 'id') uid = user[key] || '';
+
+                render();
+            });
+        }
+
         logoutButton?.addEventListener('click', () => {
             localStorage.removeItem('user');
             window.location.href = '/login.html';
         });
+
+        function render() {
+            document.title = `${uname}`;
+            detailsEl.innerHTML = `
+                <li><strong>Name:</strong> ${uname}</li>
+                <li><strong>Email:</strong> ${uemail}</li>
+                <li><strong>ID:</strong> ${uid}</li>
+            `;
+        }
     </script>
 </body>
 </html>
